@@ -26,7 +26,7 @@ class Scene {
         return intersections.filterNotNull().minByOrNull { it.distanceToIntersectionPoint }
     }
 
-    fun getColorFromLights(intersection: Intersection, ray: Ray): FloatColor {
+    fun getIntersectionColor(intersection: Intersection, ray: Ray): FloatColor {
         var newRayColor = FloatColor.BLACK
         lights.forEach {
             val intersectionToLightVector = (it.position - intersection.intersectionPoint.position).toUnitVector3()

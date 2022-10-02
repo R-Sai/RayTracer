@@ -10,7 +10,7 @@ data class Ray(
     var direction: UnitVector3,
     val sensorX: Int,
     val sensorY: Int,
-    var color: FloatColor = FloatColor(1f, 1f, 1f)
+    var energy: Float = 1f
 ) {
 
     fun getIntersection(sphere: Sphere): RayIntersectionPoint? {

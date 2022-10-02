@@ -1,37 +1,37 @@
 package com.labco.raytracer
 
 import com.labco.raytracer.material.FloatColor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class RayTracer {
 
     fun renderScene(scene: Scene, samples: Int): Array<Array<FloatColor>> {
+        val rays = scene.camera.generateRays(samples)
+        val rayBatches = rays.chunked(rays.size / 10)
         runBlocking {
-            val rays = scene.camera.generateRays(samples)
-            println("Number of rays ${rays.size}")
-            val rayBatches = rays.chunked(rays.size / 10)
             rayBatches.forEach { batch ->
                 launch(Dispatchers.IO) {
-                    val iterator = batch.toMutableList().listIterator()
-                    while (iterator.hasNext()) {
-
-                        val ray = iterator.next()
-                        ray.let {
-                            val closestIntersection = scene.getObjectIntersection(it.origin, it.direction)
-                            if (closestIntersection != null) {
-                                val reflectedRay =
-                                    closestIntersection.sceneObject.reflect(it, closestIntersection.intersectionPoint)
-                                reflectedRay.color = scene.getColorFromLights(closestIntersection, reflectedRay)
-                                scene.camera.sensor.pixels[it.sensorX][it.sensorY] += reflectedRay.color / samples
-                            }
-                            //                iterator.set(reflectedRay)
-                        }
+                    batch.forEach { ray ->
+                        scene.camera.sensor.pixels[ray.sensorX][ray.sensorY] += castRay(ray, scene, 5) / samples
                     }
                 }
             }
         }
         return scene.camera.sensor.pixels
+    }
+
+    private fun castRay(ray: Ray, scene: Scene, reflectionCount: Int, color: FloatColor = FloatColor.BLACK): FloatColor {
+        if (reflectionCount == 0) return color
+        val closestIntersection = scene.getObjectIntersection(ray.origin, ray.direction)
+        if (closestIntersection != null) {
+            val reflectedRay = closestIntersection.sceneObject.reflect(ray, closestIntersection.intersectionPoint)
+            val passColor = color + (scene.getIntersectionColor(closestIntersection, reflectedRay) * ray.energy)
+            return if(reflectedRay.energy <= 0f) {
+                passColor
+            } else {
+                castRay(reflectedRay, scene, reflectionCount - 1, passColor)
+            }
+        }
+        return color
     }
 }

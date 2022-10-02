@@ -15,29 +15,34 @@ data class FloatColor(var r: Float, var g: Float, var b: Float) {
 
     // todo fix this ugly mess
     operator fun times(color: FloatColor): FloatColor {
-        val r = (this.r * color.r).coerceIn(0f, 1f)
-        val g = (this.g * color.g).coerceIn(0f, 1f)
-        val b = (this.b * color.b).coerceIn(0f, 1f)
+        val r = (this.r * color.r)
+        val g = (this.g * color.g)
+        val b = (this.b * color.b)
         return FloatColor(r, g, b)
     }
 
     operator fun times(float: Float): FloatColor {
-        return FloatColor((r * float).coerceIn(0f, 1f), (g * float).coerceIn(0f, 1f), (b * float).coerceIn(0f, 1f))
+        return FloatColor((r * float), (g * float), (b * float))
     }
 
     operator fun plus(color: FloatColor): FloatColor {
-        val r = (this.r + color.r).coerceIn(0f, 1f)
-        val g = (this.g + color.g).coerceIn(0f, 1f)
-        val b = (this.b + color.b).coerceIn(0f, 1f)
+        val r = (this.r + color.r)
+        val g = (this.g + color.g)
+        val b = (this.b + color.b)
         return FloatColor(r, g, b)
     }
 
     operator fun minus(color: FloatColor): FloatColor {
-        val r = (this.r - color.r).coerceIn(0f, 1f)
-        val g = (this.g - color.g).coerceIn(0f, 1f)
-        val b = (this.b - color.b).coerceIn(0f, 1f)
+        val r = (this.r - color.r)
+        val g = (this.g - color.g)
+        val b = (this.b - color.b)
         return FloatColor(r, g, b)
     }
 
     operator fun div(integer: Int) = FloatColor(this.r / integer.toFloat(), this.g / integer.toFloat(), this.b / integer.toFloat())
+    fun coerce() {
+        this.r = this.r.coerceIn(0f, 1f)
+        this.g = this.g.coerceIn(0f, 1f)
+        this.b = this.b.coerceIn(0f, 1f)
+    }
 }

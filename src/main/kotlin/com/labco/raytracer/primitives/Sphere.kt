@@ -11,7 +11,8 @@ data class Sphere(var position: Vector3, var radius: Float, override var materia
         val reflectionDirection = (2 * (intersectionPoint.normal dot -ray.direction) * intersectionPoint.normal + ray.direction).toUnitVector3()
         return ray.copy(
             origin = intersectionPoint.position,
-            direction = reflectionDirection
+            direction = reflectionDirection,
+            energy = ray.energy + this.material.reflectiveness - 1f
         )
     }
 

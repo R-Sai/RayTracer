@@ -8,12 +8,13 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
+import kotlin.math.max
 
 
 private val rayTracer = RayTracer()
 private val sphereMaterial1 = Material(FloatColor(0.5f, 0.5f, 1f), 10f, 1f, 0f)
 private val sphereMaterial2 = Material(FloatColor(0.5f, 1f, 0.5f), 10f, 1f, 0f)
-private val sphereMaterial3 = Material(FloatColor(1f, 0.5f, 0.5f), 10f, 1f, 0f)
+private val sphereMaterial3 = Material(FloatColor(1f, 0.5f, 0.5f), 10f, 1f, 0.9f)
 private val sphereMaterial4 = Material(FloatColor(1f, 1f, 1f), 1f, 0f, 0f)
 private val sphere1 = Sphere(Vector3(1.5f, 0f, 4f), 1f, sphereMaterial1)
 private val sphere2 = Sphere(Vector3(-4.5f, 0f, 4f), 1f, sphereMaterial2)
@@ -40,12 +41,39 @@ fun main() {
 
     val bufferedImage = BufferedImage(bitmap.size, bitmap.first().size, BufferedImage.TYPE_INT_RGB)
     bitmap.flip()
+
     bitmap.forEachIndexed { xIndex, x ->
         x.forEachIndexed { yIndex, color ->
-            bufferedImage.setRGB(xIndex, yIndex, Color(color.r, color.g, color.b, 1f).rgb)
+//            color.coerce()
+            val hdrColor = hdr(color)
+            bufferedImage.setRGB(
+                xIndex,
+                yIndex,
+                Color(hdrColor.r, hdrColor.g, hdrColor.b, 1f).rgb
+            )
         }
     }
     val outputfile = File("image.jpg")
     ImageIO.write(bufferedImage, "jpg", outputfile)
     Runtime.getRuntime().exec("open image.jpg")
+}
+
+fun hdr(color: FloatColor): FloatColor {
+    val weightR = 0.124f
+    val weightG = 0.68f
+    val weightB = 0.195f
+    val max = max(max(color.r, color.g), color.b)
+    if(max > 1) {
+        val l = (color.r * weightR) + (color.g * weightG) + (color.b * weightB)
+        return if(l < 1) {
+            val t = (1 - l) / (max - l)
+            FloatColor((color.r * t) + (l * (1f-t)),
+                (color.g * t) + (l * (1f-t)),
+                (color.b * t) + (l * (1f-t))
+            )
+        } else {
+            FloatColor.WHITE
+        }
+    }
+    return color
 }
