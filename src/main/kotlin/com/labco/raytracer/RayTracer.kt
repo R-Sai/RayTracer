@@ -20,16 +20,16 @@ class RayTracer {
         return scene.camera.sensor.pixels
     }
 
-    private fun castRay(ray: Ray, scene: Scene, reflectionCount: Int, color: FloatColor = FloatColor.BLACK): FloatColor {
+    private fun castRay(ray: Ray, scene: Scene, reflectionCount: Int, color: FloatColor = FloatColor.BLACK, excludeObject: SceneObject? = null): FloatColor {
         if (reflectionCount == 0) return color
-        val closestIntersection = scene.getObjectIntersection(ray.origin, ray.direction)
+        val closestIntersection = scene.getObjectIntersection(ray.origin, ray.direction, excludeObject)
         if (closestIntersection != null) {
             val reflectedRay = closestIntersection.sceneObject.reflect(ray, closestIntersection.intersectionPoint)
             val passColor = color + (scene.getIntersectionColor(closestIntersection, reflectedRay) * ray.energy)
             return if(reflectedRay.energy <= 0f) {
                 passColor
             } else {
-                castRay(reflectedRay, scene, reflectionCount - 1, passColor)
+                castRay(reflectedRay, scene, reflectionCount - 1, passColor, closestIntersection.sceneObject)
             }
         }
         return color

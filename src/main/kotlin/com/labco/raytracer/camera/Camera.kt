@@ -6,7 +6,7 @@ import com.labco.raytracer.UnitVector3
 import com.labco.raytracer.millimeterToMeter
 
 class Camera {
-    var position = Vector3(5f, 5f, -10f)
+    var position = Vector3(5f, 10f, -30f)
     var lookAt = Vector3(0f, 0f, 10f)
     var upDirection = UnitVector3(0f, 1f, 0f)
     var focalLength = 28f.millimeterToMeter()
@@ -25,7 +25,7 @@ class Camera {
 
         val rays = arrayListOf<Ray>()
         for (y in 0 until sensor.resolutionY) {
-            var leftRayPosition = rayPosition
+            val leftRayPosition = rayPosition
             for (x in 0 until sensor.resolutionX) {
                 if (samples > 1) {
                     repeat(samples) {

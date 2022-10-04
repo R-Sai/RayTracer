@@ -12,19 +12,20 @@ import kotlin.math.max
 
 
 private val rayTracer = RayTracer()
-private val sphereMaterial1 = Material(FloatColor(0.5f, 0.5f, 1f), 10f, 1f, 0f)
-private val sphereMaterial2 = Material(FloatColor(0.5f, 1f, 0.5f), 10f, 1f, 0f)
-private val sphereMaterial3 = Material(FloatColor(1f, 0.5f, 0.5f), 10f, 1f, 0.9f)
-private val sphereMaterial4 = Material(FloatColor(1f, 1f, 1f), 1f, 0f, 0f)
-private val sphere1 = Sphere(Vector3(1.5f, 0f, 4f), 1f, sphereMaterial1)
-private val sphere2 = Sphere(Vector3(-4.5f, 0f, 4f), 1f, sphereMaterial2)
+private val sphereMaterial1 = Material(FloatColor(0.5f, 0.5f, 1f), 10f, 1f, 0.8f)
+private val sphereMaterial2 = Material(FloatColor(0.5f, 1f, 0.5f), 10f, 1f, 0.2f)
+private val sphereMaterial3 = Material(FloatColor(1f, 0.5f, 0.5f), 10f, 1f, 0.6f)
+private val sphereMaterial4 = Material(FloatColor(1f, 1f, 1f), 1f, 0f, 1f)
+private val sphere1 = Sphere(Vector3(-1.5f, 0f, 2f), 1f, sphereMaterial1)
+private val sphere2 = Sphere(Vector3(0f, 20f, 4f), 12f, sphereMaterial2)
 private val sphere3 = Sphere(Vector3(3f, 0f, 10f), 5f, sphereMaterial3)
 private val sphere4 = Sphere(Vector3(3f, -100000f, 0f), 99993f, sphereMaterial4)
 private val pointLight1 = PointLight(Vector3(-10f, 1f, -4f), FloatColor(1f, 1f, 1f))
 private val pointLight2 = PointLight(Vector3(10f, 0.5f, -4f), FloatColor(1f, 1f, 1f))
-private val pointLight3 = PointLight(Vector3(0f, 10f, 7f), FloatColor(1f, 1f, 1f))
+//private val pointLight3 = PointLight(Vector3(0f, 10f, 7f), FloatColor(1f, 1f, 1f))
 private val scene = Scene().apply {
-    addObjects(sphere1, sphere3, sphere4)
+    addObjects(sphere1, sphere2, sphere3, sphere4)
+//    addObjects(sphere3)
     addLights(pointLight1, pointLight2)
 }
 
@@ -53,8 +54,8 @@ fun main() {
             )
         }
     }
-    val outputfile = File("image.jpg")
-    ImageIO.write(bufferedImage, "jpg", outputfile)
+    val outputFile = File("image.jpg")
+    ImageIO.write(bufferedImage, "jpg", outputFile)
     Runtime.getRuntime().exec("open image.jpg")
 }
 
