@@ -5,12 +5,13 @@ import com.labco.raytracer.Ray
 import com.labco.raytracer.UnitVector3
 import com.labco.raytracer.millimeterToMeter
 
-class Camera {
-    var position = Vector3(5f, 10f, -30f)
-    var lookAt = Vector3(0f, 0f, 10f)
-    var upDirection = UnitVector3(0f, 1f, 0f)
-    var focalLength = 28f.millimeterToMeter()
-    var sensor = Sensor(48f.millimeterToMeter(), 36f.millimeterToMeter(), 800, 600)
+class Camera(
+    var position: Vector3 = Vector3(0f, 0f, 0f),
+    var lookAt: Vector3 = Vector3(0f, 0f, 10f),
+    var upDirection: UnitVector3 = UnitVector3(0f, 1f, 0f),
+    var focalLength: Float = 28f.millimeterToMeter(),
+    var sensor: Sensor = Sensor(48f.millimeterToMeter(), 36f.millimeterToMeter(), 800, 600)
+) {
 
     fun generateRays(samples: Int): ArrayList<Ray> {
         val lookDirection = (lookAt - position).toUnitVector3()

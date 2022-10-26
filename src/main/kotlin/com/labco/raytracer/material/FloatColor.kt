@@ -13,7 +13,6 @@ data class FloatColor(var r: Float, var g: Float, var b: Float) {
 
     fun pow(float: Float) = FloatColor(r.pow(float), g.pow(float), b.pow(float))
 
-    // todo fix this ugly mess
     operator fun times(color: FloatColor): FloatColor {
         val r = (this.r * color.r)
         val g = (this.g * color.g)

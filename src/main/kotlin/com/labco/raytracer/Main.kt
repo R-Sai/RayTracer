@@ -1,5 +1,7 @@
 package com.labco.raytracer
 
+import com.labco.raytracer.camera.Camera
+import com.labco.raytracer.camera.Sensor
 import com.labco.raytracer.light.PointLight
 import com.labco.raytracer.material.FloatColor
 import com.labco.raytracer.material.Material
@@ -27,6 +29,7 @@ private val scene = Scene().apply {
     addObjects(sphere1, sphere2, sphere3, sphere4)
 //    addObjects(sphere3)
     addLights(pointLight1, pointLight2)
+    camera = Camera(position = Vector3(5f, 10f, -30f), lookAt = Vector3(0f, 0f, 10f), sensor = Sensor(48f.millimeterToMeter(), 36f.millimeterToMeter(), 800 * 4, 600 * 4))
 }
 
 private fun <T> Array<Array<T>>.flip() {
@@ -37,7 +40,7 @@ private fun <T> Array<Array<T>>.flip() {
 fun main() {
 
     val startTime = System.nanoTime()
-    val bitmap = rayTracer.renderScene(scene, 6)
+    val bitmap = rayTracer.renderScene(scene, 1)
     println("Draw time: ${(System.nanoTime() - startTime) / 1e+9} s")
 
     val bufferedImage = BufferedImage(bitmap.size, bitmap.first().size, BufferedImage.TYPE_INT_RGB)
