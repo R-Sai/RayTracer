@@ -1,7 +1,12 @@
 package com.labco.raytracer.primitives
 
 import com.labco.raytracer.*
+import com.labco.raytracer.common.UnitVector3
+import com.labco.raytracer.common.Vector3
 import com.labco.raytracer.material.Material
+import com.labco.raytracer.ray.Ray
+import com.labco.raytracer.ray.RayIntersectionPoint
+import com.labco.raytracer.scene.SceneObject
 import kotlin.math.pow
 import kotlin.math.sqrt
 

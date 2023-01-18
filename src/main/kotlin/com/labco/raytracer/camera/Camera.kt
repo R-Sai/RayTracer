@@ -1,8 +1,8 @@
 package com.labco.raytracer.camera
 
-import com.labco.raytracer.Vector3
-import com.labco.raytracer.Ray
-import com.labco.raytracer.UnitVector3
+import com.labco.raytracer.common.Vector3
+import com.labco.raytracer.ray.Ray
+import com.labco.raytracer.common.UnitVector3
 import com.labco.raytracer.millimeterToMeter
 
 class Camera(

@@ -1,4 +1,4 @@
-package com.labco.raytracer
+package com.labco.raytracer.common
 
 import kotlin.math.pow
 import kotlin.math.sqrt

@@ -1,7 +1,9 @@
-package com.labco.raytracer
+package com.labco.raytracer.ray
 
-import com.labco.raytracer.material.FloatColor
+import com.labco.raytracer.common.UnitVector3
+import com.labco.raytracer.common.Vector3
 import com.labco.raytracer.primitives.Sphere
+import com.labco.raytracer.times
 import kotlin.math.pow
 import kotlin.math.sqrt
 

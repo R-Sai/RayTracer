@@ -1,8 +1,8 @@
 package com.labco.raytracer.light
 
-import com.labco.raytracer.Ray
-import com.labco.raytracer.RayIntersectionPoint
-import com.labco.raytracer.Vector3
+import com.labco.raytracer.ray.Ray
+import com.labco.raytracer.ray.RayIntersectionPoint
+import com.labco.raytracer.common.Vector3
 import com.labco.raytracer.material.FloatColor
 import com.labco.raytracer.material.Material
 

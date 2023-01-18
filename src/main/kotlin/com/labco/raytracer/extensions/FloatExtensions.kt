@@ -1,5 +1,7 @@
 package com.labco.raytracer
 
+import com.labco.raytracer.common.UnitVector3
+import com.labco.raytracer.common.Vector3
 import com.labco.raytracer.material.FloatColor
 import com.labco.raytracer.material.RGBColor
 

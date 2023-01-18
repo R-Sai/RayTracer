@@ -1,6 +1,9 @@
 package com.labco.raytracer
 
 import com.labco.raytracer.material.FloatColor
+import com.labco.raytracer.ray.Ray
+import com.labco.raytracer.scene.Scene
+import com.labco.raytracer.scene.SceneObject
 import kotlinx.coroutines.*
 
 class RayTracer {
